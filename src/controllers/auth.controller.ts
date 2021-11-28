@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
+import { SIGN_IN_TITLE } from '../contants/title.contant';
+import { renderWithTitle } from '../helpers/render.helper';
 
 export const signIn = async (req: Request, res: Response): Promise<any> => {
-    return res.render('auth/sign-in');
-}
-
-export const signUp = async (req: Request, res: Response): Promise<any> => {
-    return res.render('auth/sign-up');
+    return renderWithTitle(res, {
+        title: SIGN_IN_TITLE,
+        path: 'auth/sign-in'
+    });
 }
