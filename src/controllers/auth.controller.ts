@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { SIGN_IN_TITLE } from '../contants/title.contant';
-import { renderWithTitleAndUserData } from '../helpers/render.helper';
+import { renderWithUserDataAndFlash } from '../helpers/render.helper';
 
 export const signIn = async (req: Request, res: Response): Promise<any> => {
-    return renderWithTitleAndUserData({
+    return renderWithUserDataAndFlash({
         req, res,
         title: SIGN_IN_TITLE,
         path: 'auth/sign-in'
@@ -12,5 +12,6 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
 
 export const signOut = (req: Request, res: Response): any => {
     req.logout();
+    req.flash('success', 'You have successfully signed out!')
     return res.redirect('/sign-in');
 }

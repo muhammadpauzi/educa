@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import dotenv from 'dotenv';
 import session from 'express-session';
+import flash from 'connect-flash';
 import * as exphbs from 'express-handlebars';
 import { initPassport } from './configs/passport.config';
 
@@ -23,6 +24,9 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }));
+
+// flash
+app.use(flash());
 
 // init passport
 initPassport(app);
