@@ -1,6 +1,6 @@
 import express, { Application } from 'express';
 import dotenv from 'dotenv';
-import { engine as exphbs } from 'express-handlebars';
+import * as exphbs from 'express-handlebars';
 
 // routes
 import { dashboardRouter, authRouter } from './routes';
@@ -9,9 +9,10 @@ dotenv.config();
 
 const app: Application = express();
 const PORT: number = Number(process.env.PORT) || 5000;
+const viewInstance = exphbs.create({ defaultLayout: 'main', extname: '.hbs' });
 
 // handlebars
-app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }));
+app.engine('.hbs', viewInstance.engine);
 app.set('view engine', '.hbs');
 
 // static
