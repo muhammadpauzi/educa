@@ -1,14 +1,15 @@
 import { Router } from 'express';
 import passport from 'passport';
 import { signIn, signOut } from '../controllers/auth.controller';
+import { ensureAuth, ensureGuest } from '../middlewares/auth.middleware';
 
 const router: Router = Router();
 
-router.get('/sign-in', signIn);
-router.post('/sign-out', signOut);
+router.get('/sign-in', ensureGuest, signIn);
+router.post('/sign-out', ensureAuth, signOut);
 
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-router.get('/google/callback',
+router.get('/google', ensureGuest, passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/google/callback', ensureGuest,
     passport.authenticate('google', { failureRedirect: '/sign-in' }),
     function (req, res) {
         // Successful authentication, redirect home.
