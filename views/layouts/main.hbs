@@ -45,9 +45,11 @@
                             <span class="sr-only">Open user menu</span>
                             <img class="h-10 w-10 rounded-full" src="{{user.image}}" alt="">
                         </button>
-                        <a href="/sign-out"
-                            class="bg-red-500 text-white font-bold rounded-md py-2 px-3 block focus:ring-red-500 focus:ring-offset-2 focus:ring-2">Sign
-                            out</a>
+                        <form action="/sign-out" method="post">
+                            <button
+                                class="bg-red-500 text-white font-bold rounded-md py-2 px-3 block focus:ring-red-500 focus:ring-offset-2 focus:ring-2 outline-none">Sign
+                                out</button>
+                        </form>
                     </div>
                     {{else}}
                     <div class="flex space-x-1">

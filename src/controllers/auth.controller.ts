@@ -9,3 +9,8 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
         path: 'auth/sign-in'
     });
 }
+
+export const signOut = (req: Request, res: Response): any => {
+    req.logout();
+    return res.redirect('/sign-in');
+}
