@@ -16,7 +16,7 @@ app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }));
 app.set('view engine', '.hbs');
 
 // static
-app.use(express.static(join(__dirname, 'public')));
+app.use(express.static('public'));
 
 // routes
 app.use('/', authRouter);
