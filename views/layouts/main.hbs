@@ -46,7 +46,7 @@
                             <img class="h-10 w-10 rounded-full" src="{{user.image}}" alt="">
                         </button>
                         <form action="/sign-out" method="post">
-                            <button
+                            <button onclick="return confirm('Are you sure to sign out?')"
                                 class="bg-red-500 text-white font-bold rounded-md py-2 px-3 block focus:ring-red-500 focus:ring-offset-2 focus:ring-2 outline-none">Sign
                                 out</button>
                         </form>
