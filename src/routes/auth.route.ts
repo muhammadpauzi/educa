@@ -8,7 +8,7 @@ const router: Router = Router();
 router.get('/sign-in', ensureGuest, signIn);
 router.post('/sign-out', ensureAuth, signOut);
 
-router.get('/google', ensureGuest, passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.post('/google', ensureGuest, passport.authenticate('google', { scope: ['profile', 'email'] }));
 router.get('/google/callback', ensureGuest,
     passport.authenticate('google', { failureRedirect: '/sign-in' }),
     function (req, res) {
