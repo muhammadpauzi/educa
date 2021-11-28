@@ -1,6 +1,8 @@
 import express, { Application } from 'express';
 import dotenv from 'dotenv';
+import session from 'express-session';
 import * as exphbs from 'express-handlebars';
+import { initPassport } from './configs/passport.config';
 
 // routes
 import { dashboardRouter, authRouter } from './routes';
@@ -14,6 +16,16 @@ const viewInstance = exphbs.create({ defaultLayout: 'main', extname: '.hbs' });
 // handlebars
 app.engine('.hbs', viewInstance.engine);
 app.set('view engine', '.hbs');
+
+// session
+app.use(session({
+    secret: process.env.SECRET_SESSION || 'secret_123',
+    resave: false,
+    saveUninitialized: false,
+}));
+
+// init passport
+initPassport(app);
 
 // static
 app.use(express.static('public'));
