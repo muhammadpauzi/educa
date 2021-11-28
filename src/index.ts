@@ -1,5 +1,4 @@
 import express, { Application } from 'express';
-import { join } from 'path';
 import dotenv from 'dotenv';
 import { engine as exphbs } from 'express-handlebars';
 
