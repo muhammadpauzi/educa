@@ -24,6 +24,13 @@
   dependencies:
     "@types/ms" "*"
 
+"@types/express-handlebars@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@types/express-handlebars/-/express-handlebars-6.0.0.tgz#ca736fff5544d80f81f0869d56bb7ad333e000e0"
+  integrity sha512-L0G9j7xc9k6FavI9CCUueJf7YHGE5b+gXV4NGGcObTbLqvZ2TwebEsrFb1b8NEc2kDf22Mu+jCDPjvWzfCS0Gw==
+  dependencies:
+    express-handlebars "*"
+
 "@types/express-serve-static-core@^4.17.18":
   version "4.17.25"
   resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-4.17.25.tgz#e42f7046adc65ece2eb6059b77aecfbe9e9f82e0"
@@ -372,7 +379,7 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
-express-handlebars@^6.0.2:
+express-handlebars@*, express-handlebars@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/express-handlebars/-/express-handlebars-6.0.2.tgz#4d377751e3ef70a661aba76d921dee563b08b35a"
   integrity sha512-PXNT4oDHIDbg0/QBXPwf2laTi+eqErEJ3Ldc7Ky6WHpr7xJMoltsnPM7lScjN6sWZWaIPNdDYJvV+6P9cnv1pg==
