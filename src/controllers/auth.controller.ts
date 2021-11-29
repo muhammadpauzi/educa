@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { SIGN_IN_TITLE } from '../contants/title.contant';
+import { SIGN_IN_TITLE } from '../constants/title.contant';
 import { renderWithUserDataAndFlash } from '../helpers/render.helper';
 
 export const signIn = async (req: Request, res: Response): Promise<any> => {

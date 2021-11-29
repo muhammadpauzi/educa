@@ -1,17 +1,21 @@
 import User from "./user.model";
+import Class from "./class.model";
 
-[User].map(model => {
+User.hasMany(Class);
+Class.belongsTo(User);
+
+[User, Class].map(model => {
     model.sync().then(() => {
         console.log(`${model.name} is created!`);
     })
 });
 
-// [User].map(model => {
+// [User, Class].map(model => {
 //     model.sync({ force: true }).then(() => {
 //         console.log(`${model.name} is created!`);
 //     })
 // });
 
 export {
-    User
+    User, Class
 }

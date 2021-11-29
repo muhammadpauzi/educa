@@ -16,17 +16,21 @@
             data-target="#tabItemWorks">Works</button>
     </div>
 
-    <div class="tab-items" id="tabItemClasses">
-        <h1 class="text-3xl text-gray-800">Classes</h1>
-        {{!-- <div class="bg-white border-2 mx-auto border-gray-200 p-3 py-5 rounded-md w-full">
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">First Class</h2>
-        </div> --}}
-    </div>
-    <div class="tab-items" style="display: none;" id="tabItemPresences">
-        <h1 class="text-3xl text-gray-800">Presences</h1>
-    </div>
-    <div class="tab-items" style="display: none;" id="tabItemWorks">
-        <h1 class="text-3xl text-gray-800">Works</h1>
+    <div class="py-4">
+        <div class="tab-items" id="tabItemClasses">
+            <div class="flex items-center justify-between">
+                <h1 class="text-3xl text-gray-800">Classes</h1>
+                <a href="/classes/create"
+                    class="bg-green-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2">Create
+                    Class</a>
+            </div>
+        </div>
+        <div class="tab-items" style="display: none;" id="tabItemPresences">
+            <h1 class="text-3xl text-gray-800">Presences</h1>
+        </div>
+        <div class="tab-items" style="display: none;" id="tabItemWorks">
+            <h1 class="text-3xl text-gray-800">Works</h1>
+        </div>
     </div>
 </div>
 

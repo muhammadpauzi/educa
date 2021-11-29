@@ -34,6 +34,9 @@ initPassport(app);
 // static
 app.use(express.static('public'));
 
+// request body
+app.use(express.urlencoded({ extended: true }));
+
 // routes
 app.use('/', authRouter);
 app.use('/', dashboardRouter);
