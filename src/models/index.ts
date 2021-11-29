@@ -6,7 +6,7 @@ Class.belongsTo(User);
 
 [User, Class].map(model => {
     model.sync().then(() => {
-        console.log(`${model.name} is created!`);
+        console.log(`${model.name} table is created!`);
     })
 });
 
