@@ -39,7 +39,7 @@ export const store = async (req: Request, res: Response): Promise<any> => {
         // if validate success
         if (errors === true) {
             const { id } = <IUser>req.user; // fix: 'id' does not exist on type of User / Express.User
-            await Class.create({ name, room, code, UserId: Number(id) });
+            await Class.create({ name, room, code, UserId: id });
             req.flash('success', 'Class has successfully created!');
             return res.redirect('/');
         }
