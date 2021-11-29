@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
 import { CLASS_TITLE, CREATE_CLASS_TITLE } from "../constants/title.contant";
 import { renderWithUserDataAndFlash } from "../helpers/render.helper";
+import IUser from "../interfaces/user.interface";
+import IClass from "../interfaces/class.interface";
 import { Class, User } from "../models";
-import { ClassValidator, validateClass } from '../validators/class.validator';
+import { validateClass } from '../validators/class.validator';
+import { getAvailableCode } from "../helpers/class.helper";
 
 export const index = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -24,11 +27,18 @@ export const create = (req: Request, res: Response): any => {
 
 export const store = async (req: Request, res: Response): Promise<any> => {
     try {
-        const errors = await validateClass(req.body);
-        // if success
+        const { name, room }: IClass = req.body;
+        let code = await getAvailableCode();
+        // validate request
+        const errors = await validateClass({ name, room, code });
+        // if validate success
         if (errors === true) {
-
+            const { id } = <IUser>req.user; // fix: 'id' does not exist on type of User / Express.User
+            await Class.create({ name, room, code, UserId: id });
+            req.flash('success', 'Class has successfully created!');
+            return res.redirect('/');
         }
+        // if validate fail/error
         return renderWithUserDataAndFlash({
             req, res,
             title: CREATE_CLASS_TITLE,
