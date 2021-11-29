@@ -8,6 +8,7 @@ import { validateClass } from '../validators/class.validator';
 import { getAvailableCode } from "../helpers/class.helper";
 import moment from 'moment';
 import { getFullBaseURL } from "../utils/url.util";
+import Student from "../models/student.model";
 
 export const index = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -88,5 +89,38 @@ export const inviteLink = async (req: Request, res: Response): Promise<any> => {
     } catch (error: any) {
         console.log(error);
         return res.status(500).json({ message: error.message });
+    }
+}
+
+export const invite = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { id } = req.params;
+        const { code } = req.query;
+        const _class = await Class.findByPk(Number(id), { include: User });
+        const { id: userId } = <IUser>req.user;
+
+        if (_class) {
+            if (_class.getDataValue('User').id != userId) {
+                if (_class?.getDataValue('code') == code) {
+                    const student = await Student.findOne({ where: { UserId: userId } });
+                    if (student) {
+                        req.flash('error', 'You have invited!');
+                    } else {
+                        await Student.create({ UserId: userId, ClassId: _class.getDataValue('id') });
+                        req.flash('success', 'You have successfully invited!');
+                        return res.redirect(`/classes/${_class.getDataValue('id')}`);
+                    }
+                } else {
+                    req.flash('error', 'Failed to invite.');
+                }
+            } else {
+                req.flash('error', 'You can\'t invite to this class.');
+            }
+        } else {
+            req.flash('error', 'Class does not exist.');
+        }
+        return res.redirect('/');
+    } catch (error: any) {
+        console.log(error);
     }
 }
