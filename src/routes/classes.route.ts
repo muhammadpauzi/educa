@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { index, create, store, _class, inviteLink, invite } from '../controllers/class.controller';
+import { index, create, store, _class, inviteLink, invite, students } from '../controllers/class.controller';
 import { ensureAuth } from '../middlewares/auth.middleware';
 
 const router: Router = Router();
@@ -10,5 +10,6 @@ router.post('/create', ensureAuth, store);
 router.get('/:id', ensureAuth, _class);
 router.get('/:id/invite-link', ensureAuth, inviteLink);
 router.get('/:id/invite', ensureAuth, invite);
+router.get('/:id/students', ensureAuth, students);
 
 export default router;
