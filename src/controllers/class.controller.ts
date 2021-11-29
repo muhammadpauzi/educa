@@ -6,11 +6,15 @@ import IClass from "../interfaces/class.interface";
 import { Class, User } from "../models";
 import { validateClass } from '../validators/class.validator';
 import { getAvailableCode } from "../helpers/class.helper";
+import moment from 'moment';
 
 export const index = async (req: Request, res: Response): Promise<any> => {
     try {
-        const classes = await Class.findAll({ include: User });
-        return res.status(200).json({ classes });
+        if (process.env.NODE_ENV == "development" || req.headers["content-type"] == 'Application/json') { // prevent if opened from browser (for production)
+            const classes = await Class.findAll({ order: [['createdAt', 'DESC']], include: User });
+            return res.status(200).json({ classes });
+        }
+        return res.redirect('/');
     } catch (error: any) {
         console.log(error);
         return res.status(500).json({ message: error.message });
@@ -34,7 +38,7 @@ export const store = async (req: Request, res: Response): Promise<any> => {
         // if validate success
         if (errors === true) {
             const { id } = <IUser>req.user; // fix: 'id' does not exist on type of User / Express.User
-            await Class.create({ name, room, code, UserId: id });
+            await Class.create({ name, room, code, UserId: Number(id) });
             req.flash('success', 'Class has successfully created!');
             return res.redirect('/');
         }
