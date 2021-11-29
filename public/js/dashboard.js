@@ -33,7 +33,7 @@ const getTextMessageComponent = (message = "", color = "red") => {
     return `<div class="py-10"><p class="text-center text-${color}-500 font-medium">${message}</p></div>`;
 }
 
-const getCardComponent = ({ id, name, User, room }) => {
+const getCardComponent = ({ name, id, room, username }) => {
     return `<div class="bg-white border-2 border-gray-200 p-4 rounded-md w-full">
         <div class="mb-5">
             <h2 class="text-xl text-gray-800 font-medium">
@@ -43,7 +43,7 @@ const getCardComponent = ({ id, name, User, room }) => {
         </div>
 
         <div class="flex space-x-3 items-center">
-            <a href="" class="text-md text-sm font-medium text-gray-800">${User.name}</a>
+            <a href="" class="text-md text-sm font-medium text-gray-800">${username}</a>
         </div>
     </div>`
 }
@@ -60,11 +60,11 @@ const getClasses = async () => {
 
 const showClasses = async () => {
     classesGroup.innerHTML = getSpinnerComponent();
-    const { classes } = await getClasses();
-    if (classes) {
+    const { user } = await getClasses();
+    if (user.Classes.length > 0) {
         let cardComponents = '';
-        classes.forEach(_class => {
-            cardComponents += getCardComponent(_class);
+        user.Classes.forEach(_class => {
+            cardComponents += getCardComponent({ ..._class, username: user.name });
         });
         classesGroup.innerHTML = cardComponents;
     } else {

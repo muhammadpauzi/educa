@@ -11,8 +11,9 @@ import moment from 'moment';
 export const index = async (req: Request, res: Response): Promise<any> => {
     try {
         if (process.env.NODE_ENV == "development" || req.headers["content-type"] == 'application/json') { // prevent if opened from browser (for production)
-            const classes = await Class.findAll({ order: [['createdAt', 'DESC']], include: User });
-            return res.status(200).json({ classes });
+            const { id } = <IUser>req.user;
+            const user = await User.findByPk(id, { order: [[Class, 'createdAt', 'DESC']], include: Class });
+            return res.status(200).json({ user });
         }
         return res.redirect('/');
     } catch (error: any) {
