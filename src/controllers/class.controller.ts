@@ -10,7 +10,7 @@ import moment from 'moment';
 
 export const index = async (req: Request, res: Response): Promise<any> => {
     try {
-        if (process.env.NODE_ENV == "development" || req.headers["content-type"] == 'Application/json') { // prevent if opened from browser (for production)
+        if (process.env.NODE_ENV == "development" || req.headers["content-type"] == 'application/json') { // prevent if opened from browser (for production)
             const classes = await Class.findAll({ order: [['createdAt', 'DESC']], include: User });
             return res.status(200).json({ classes });
         }
@@ -52,6 +52,23 @@ export const store = async (req: Request, res: Response): Promise<any> => {
             }
         });
     } catch (error) {
+        console.log(error);
+    }
+}
+
+export const _class = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { id } = req.params;
+        const classData = await Class.findByPk(Number(id), { include: User });
+        return renderWithUserDataAndFlash({
+            req, res,
+            title: CLASS_TITLE,
+            path: 'classes/class',
+            data: {
+                classData
+            }
+        });
+    } catch (error: any) {
         console.log(error);
     }
 }

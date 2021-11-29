@@ -1,0 +1,49 @@
+<div class="max-w-xl mx-auto py-5">
+    <h1 class="text-3xl font-medium text-green-500 mb-3">{{classData.dataValues.name}}</h1>
+    <div class="grid grid-cols-3 mb-3">
+        <button
+            class="outline-none appearance-none border-green-500 py-3 px-2 bg-white border-b-2 font-bold text-gray-800 tab-triggers"
+            data-target="#tabItemWorks">Works</button>
+        <button
+            class="outline-none appearance-none hover:border-green-200 py-3 px-2 bg-white border-b-2 border-gray-200 font-bold text-gray-800 tab-triggers"
+            data-target="#tabItemStudents">Students</button>
+        <button
+            class="outline-none appearance-none hover:border-green-200 py-3 px-2 bg-white border-b-2 border-gray-200 font-bold text-gray-800 tab-triggers"
+            data-target="#tabItemSettings">Settings</button>
+    </div>
+
+    <div class="py-4">
+        <div class="tab-items" id="tabItemWorks">
+            <h2 class="text-3xl text-gray-800">Works</h2>
+        </div>
+        <div class="tab-items" style="display: none;" id="tabItemStudents">
+            <div class="flex items-center justify-between mb-4">
+                <h1 class="text-3xl text-gray-800">Students</h1>
+                <div>
+                    {{!-- link invite /students/{{classData.dataValues.id}}/invite / (create) --}}
+                    <button
+                        class="bg-green-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none">Copy
+                        invite link</button>
+                    <button
+                        class="bg-green-100 text-green-500 font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none">Copy
+                        class code</button>
+                </div>
+            </div>
+        </div>
+        <div class="tab-items" style="display: none;" id="tabItemSettings">
+            <div class="flex items-center justify-between mb-4">
+                <h1 class="text-3xl text-gray-800">Settings</h1>
+                <div>
+                    <button
+                        class="bg-green-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none">Update
+                        class code</button>
+                    <button
+                        class="bg-red-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-red-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none">Delete
+                        this class</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/dashboard.js"></script>

@@ -1,1 +1,6 @@
 fixed: set code column to unique
+update logging message of table created
+
+change dashboard.js to main.js
+
+important: get classes by current user id / where: {id: req.user.id}
