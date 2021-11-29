@@ -22,10 +22,12 @@
                 <div>
                     {{!-- link invite /students/{{classData.dataValues.id}}/invite / (create) --}}
                     <button
-                        class="bg-green-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none">Copy
+                        class="bg-green-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none"
+                        id="copyInviteLinkButton" data-classId="{{classData.dataValues.id}}">Copy
                         invite link</button>
                     <button
-                        class="bg-green-100 text-green-500 font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none">Copy
+                        class="bg-green-100 text-green-500 font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none"
+                        id="copyClassCodeButton">Copy
                         class code</button>
                 </div>
             </div>
@@ -46,4 +48,4 @@
     </div>
 </div>
 
-<script src="/js/dashboard.js"></script>
+<script src="/js/class.js" type="module"></script>

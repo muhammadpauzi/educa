@@ -7,6 +7,7 @@ import { Class, User } from "../models";
 import { validateClass } from '../validators/class.validator';
 import { getAvailableCode } from "../helpers/class.helper";
 import moment from 'moment';
+import { getFullBaseURL } from "../utils/url.util";
 
 export const index = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -71,5 +72,21 @@ export const _class = async (req: Request, res: Response): Promise<any> => {
         });
     } catch (error: any) {
         console.log(error);
+    }
+}
+
+export const inviteLink = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { id } = req.params;
+        const _class = await Class.findByPk(Number(id));
+        if (_class) {
+            const inviteLinkURL = `${getFullBaseURL(req)}/classes/${id}/invite?code=${_class?.getDataValue('code')}`;
+            return res.status(200).json({ inviteLinkURL });
+        } else {
+            return res.status(404).json({ message: "Class does not exist." });
+        }
+    } catch (error: any) {
+        console.log(error);
+        return res.status(500).json({ message: error.message });
     }
 }

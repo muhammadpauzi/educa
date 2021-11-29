@@ -18,6 +18,20 @@ tabTriggers.forEach(trigger => {
     });
 });
 
-hideNotif.addEventListener('click', function () {
+hideNotif && hideNotif.addEventListener('click', function () {
     document.querySelector(this.dataset.target).remove();
 });
+
+export const copyText = (TextToCopy) => {
+    var TempText = document.createElement("input");
+    TempText.value = TextToCopy;
+    document.body.appendChild(TempText);
+    TempText.select();
+
+    document.execCommand("copy");
+    document.body.removeChild(TempText);
+
+    alert("Copied!");
+}
+
+

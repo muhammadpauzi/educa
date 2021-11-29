@@ -1,14 +1,15 @@
 import { getSpinnerComponent, getCardComponent, getTextMessageComponent } from "./components.js";
 import { classesGroup } from "./elements.js";
+import { fetchData } from "./utils.js";
 
 const getClasses = async () => {
-    try {
-        const res = await fetch('/classes', { headers: { 'Content-Type': 'application/json' } });
-        const data = await res.json();
-        return data;
-    } catch (error) {
-        console.error(error);
-    }
+    const { res, data } = await fetchData({
+        url: '/classes',
+        options: {
+            headers: { 'Content-Type': 'application/json' }
+        }
+    });
+    return data;
 }
 
 const showClasses = async () => {
@@ -24,5 +25,8 @@ const showClasses = async () => {
         classesGroup.innerHTML = getTextMessageComponent('Classes does not exist.');
     }
 }
+
+// for call in html tag cause type module
+window.showClasses = showClasses;
 
 showClasses();
