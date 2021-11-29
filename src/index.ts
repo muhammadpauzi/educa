@@ -6,7 +6,7 @@ import * as exphbs from 'express-handlebars';
 import { initPassport } from './configs/passport.config';
 
 // routes
-import { dashboardRouter, authRouter, classesRouter } from './routes';
+import { dashboardRouter, authRouter, classesRouter, studentsRouter } from './routes';
 
 dotenv.config();
 
@@ -41,6 +41,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', authRouter);
 app.use('/', dashboardRouter);
 app.use('/classes', classesRouter);
+app.use('/students', studentsRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

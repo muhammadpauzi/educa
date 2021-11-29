@@ -6,7 +6,7 @@
             data-target="#tabItemWorks">Works</button>
         <button
             class="outline-none appearance-none hover:border-green-200 py-3 px-2 bg-white border-b-2 border-gray-200 font-bold text-gray-800 tab-triggers"
-            data-target="#tabItemStudents">Students</button>
+            data-target="#tabItemStudents" onclick="showStudents({{classData.dataValues.id}})">Students</button>
         <button
             class="outline-none appearance-none hover:border-green-200 py-3 px-2 bg-white border-b-2 border-gray-200 font-bold text-gray-800 tab-triggers"
             data-target="#tabItemSettings">Settings</button>
@@ -30,6 +30,9 @@
                         id="copyClassCodeButton">Copy
                         class code</button>
                 </div>
+            </div>
+            <div id="students" class="space-y-2">
+
             </div>
         </div>
         <div class="tab-items" style="display: none;" id="tabItemSettings">

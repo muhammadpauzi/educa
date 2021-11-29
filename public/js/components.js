@@ -24,3 +24,15 @@ export const getCardComponent = ({ name, id, room, username }) => {
         </div>
     </div>`
 }
+
+export const getStudentCardComponent = ({ name, image }) => {
+    return `<div class="bg-white border-2 border-gray-200 p-4 rounded-md w-full">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gray-800 flex text-sm rounded-full">
+                        <span class="sr-only">Open user menu</span>
+                        <img class="h-10 w-10 rounded-full" src="${image}" alt="">
+                    </div>
+                    <h2 class="text-lg text-gray-800 font-medium">${name}</h2>
+                </div>
+            </div>`
+}

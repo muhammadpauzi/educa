@@ -61,16 +61,22 @@ export const store = async (req: Request, res: Response): Promise<any> => {
 
 export const _class = async (req: Request, res: Response): Promise<any> => {
     try {
+        const { id: userId } = <IUser>req.user;
         const { id } = req.params;
         const classData = await Class.findByPk(Number(id), { include: User });
-        return renderWithUserDataAndFlash({
-            req, res,
-            title: CLASS_TITLE,
-            path: 'classes/class',
-            data: {
-                classData
-            }
-        });
+        if (classData && classData.getDataValue('User').id == userId) {
+            return renderWithUserDataAndFlash({
+                req, res,
+                title: CLASS_TITLE,
+                path: 'classes/class',
+                data: {
+                    classData
+                }
+            });
+        } else {
+            req.flash('error', 'Class doesn\'t exist or you don\'t have any permission.')
+            return res.redirect('/');
+        }
     } catch (error: any) {
         console.log(error);
     }
@@ -100,9 +106,12 @@ export const invite = async (req: Request, res: Response): Promise<any> => {
         const { id: userId } = <IUser>req.user;
 
         if (_class) {
-            if (_class.getDataValue('User').id != userId) {
+            if (_class.getDataValue('User').id == userId) {
+                req.flash('error', 'You can\'t invite to this class.');
+            } else { // if user not invited yet
                 if (_class?.getDataValue('code') == code) {
-                    const student = await Student.findOne({ where: { UserId: userId } });
+                    // check if user has invited
+                    const student = await Student.findOne({ where: { UserId: userId, ClassId: id } });
                     if (student) {
                         req.flash('error', 'You have invited!');
                     } else {
@@ -113,8 +122,6 @@ export const invite = async (req: Request, res: Response): Promise<any> => {
                 } else {
                     req.flash('error', 'Failed to invite.');
                 }
-            } else {
-                req.flash('error', 'You can\'t invite to this class.');
             }
         } else {
             req.flash('error', 'Class does not exist.');
@@ -122,5 +129,19 @@ export const invite = async (req: Request, res: Response): Promise<any> => {
         return res.redirect('/');
     } catch (error: any) {
         console.log(error);
+    }
+}
+
+export const students = async (req: Request, res: Response): Promise<any> => {
+    try {
+        if (process.env.NODE_ENV == "development" || req.headers["content-type"] == 'application/json') {
+            const { id } = req.params; // class id
+            const students = await Student.findAll({ where: { ClassId: id }, order: [['createdAt', 'DESC']], include: User });
+            return res.status(200).json({ students });
+        }
+        return res.redirect('/');
+    } catch (error: any) {
+        console.log(error);
+        return res.status(500).json({ message: error.message });
     }
 }
