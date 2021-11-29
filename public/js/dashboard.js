@@ -21,10 +21,22 @@ tabTriggers.forEach(trigger => {
 });
 
 
-const cardComponent = ({ name, User, room }) => {
+const getSpinnerComponent = () => {
+    return `<div class="py-10">
+    <div
+        class="loader mx-auto ease-linear rounded-full border-2 border-t-2 border-gray-200 h-12 w-12"
+    ></div>
+    </div>`;
+}
+
+const getTextMessageComponent = (message = "", color = "red") => {
+    return `<div class="py-10"><p class="text-center text-${color}-500 font-medium">${message}</p></div>`;
+}
+
+const getCardComponent = ({ name, User, room }) => {
     return `<div class="bg-white border-2 border-gray-200 p-4 rounded-md w-full">
         <div class="mb-5">
-            <h2 class="text-2xl text-gray-800 font-bold">
+            <h2 class="text-xl text-gray-800 font-medium">
                 <a href="" class="text-green-500 hover:underline">${name}</a>
             </h2>
             <h3 class="text-lg text-gray-600">${room}</h3>
@@ -47,12 +59,17 @@ const getClasses = async () => {
 }
 
 const showClasses = async () => {
+    classesGroup.innerHTML = getSpinnerComponent();
     const { classes } = await getClasses();
-    let cardComponents = '';
-    classes.forEach(_class => {
-        cardComponents += cardComponent(_class);
-    });
-    classesGroup.innerHTML = cardComponents;
+    if (classes) {
+        let cardComponents = '';
+        classes.forEach(_class => {
+            cardComponents += getCardComponent(_class);
+        });
+        classesGroup.innerHTML = cardComponents;
+    } else {
+        classesGroup.innerHTML = getTextMessageComponent('Classes does not exist.');
+    }
 }
 
 showClasses();
