@@ -64,6 +64,7 @@ export const _class = async (req: Request, res: Response): Promise<any> => {
         const { id: userId } = <IUser>req.user;
         const { id } = req.params;
         const classData = await Class.findByPk(Number(id), { include: User });
+
         if (classData && classData.getDataValue('User').id == userId) {
             return renderWithUserDataAndFlash({
                 req, res,
@@ -85,9 +86,10 @@ export const _class = async (req: Request, res: Response): Promise<any> => {
 export const inviteLink = async (req: Request, res: Response): Promise<any> => {
     try {
         const { id } = req.params;
-        const _class = await Class.findByPk(Number(id));
-        if (_class) {
-            const code = _class?.getDataValue('code');
+        const classData = await Class.findByPk(Number(id));
+
+        if (classData) {
+            const code = classData?.getDataValue('code');
             const inviteLinkURL = `${getFullBaseURL(req)}/classes/${id}/invite?code=${code}`;
             return res.status(200).json({ inviteLinkURL, code });
         } else {
@@ -103,22 +105,23 @@ export const invite = async (req: Request, res: Response): Promise<any> => {
     try {
         const { id } = req.params;
         const { code } = req.query;
-        const _class = await Class.findByPk(Number(id), { include: User });
+        const classData = await Class.findByPk(Number(id), { include: User });
         const { id: userId } = <IUser>req.user;
 
-        if (_class) {
-            if (_class.getDataValue('User').id == userId) {
+        if (classData) {
+            if (classData.getDataValue('User').id == userId) {
                 req.flash('error', 'You can\'t invite to this class.');
             } else { // if user not invited yet
-                if (_class?.getDataValue('code') == code) {
+                if (classData?.getDataValue('code') == code) {
                     // check if user has invited
                     const student = await Student.findOne({ where: { UserId: userId, ClassId: id } });
                     if (student) {
                         req.flash('error', 'You have invited!');
                     } else {
-                        await Student.create({ UserId: userId, ClassId: _class.getDataValue('id') });
+                        await Student.create({ UserId: userId, ClassId: classData.getDataValue('id') });
                         req.flash('success', 'You have successfully invited!');
-                        return res.redirect(`/classes/${_class.getDataValue('id')}`);
+                        // fixed
+                        // return res.redirect(`/classes/${classData.getDataValue('id')}`);
                     }
                 } else {
                     req.flash('error', 'Failed to invite.');
@@ -150,14 +153,14 @@ export const students = async (req: Request, res: Response): Promise<any> => {
 export const updateClassCode = async (req: Request, res: Response): Promise<any> => {
     try {
         const { id } = req.params;
-        const _class = await Class.findByPk(Number(id), { include: User });
+        const classData = await Class.findByPk(Number(id), { include: User });
         const { id: userId } = <IUser>req.user;
         const code = await getAvailableCode();
 
-        if (_class) {
+        if (classData) {
             // if user try to update class code  belongs to someone else
-            if (_class.getDataValue('User').id == userId) {
-                _class.update({
+            if (classData.getDataValue('User').id == userId) {
+                classData.update({
                     code
                 });
                 return res.status(200).json({ message: 'The code of this class successfully updated.' })
@@ -176,13 +179,13 @@ export const updateClassCode = async (req: Request, res: Response): Promise<any>
 export const deleteClass = async (req: Request, res: Response): Promise<any> => {
     try {
         const { id } = req.params;
-        const _class = await Class.findByPk(Number(id), { include: User });
+        const classData = await Class.findByPk(Number(id), { include: User });
         const { id: userId } = <IUser>req.user;
 
-        if (_class) {
+        if (classData) {
             // if user try to delete class belongs to someone else
-            if (_class.getDataValue('User').id == userId) {
-                await _class.destroy();
+            if (classData.getDataValue('User').id == userId) {
+                await classData.destroy();
                 req.flash('success', 'The class successfully deleted.');
             } else {
                 req.flash('error', 'You don\'t have any permission to delete this class.');

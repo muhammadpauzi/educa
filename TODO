@@ -5,5 +5,5 @@ fixed: change dashboard.js to main.js
 
 fixed: important: get classes by current user id / where: {id: req.user.id}
 
-important: fix hide notif
-important: fix show message invite student
+fixed: important: fix hide notif
+fixed: important: fix show message invite student
