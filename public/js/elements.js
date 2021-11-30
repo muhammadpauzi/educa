@@ -5,3 +5,5 @@ export const studentsGroup = document.getElementById('students');
 export const hideNotif = document.getElementById('hideNotif');
 export const copyInviteLinkButton = document.getElementById('copyInviteLinkButton');
 export const copyClassCodeButton = document.getElementById('copyClassCodeButton');
+export const notifGroup = document.getElementById('notifGroup');
+export const updateClassCodeButton = document.getElementById('updateClassCodeButton');

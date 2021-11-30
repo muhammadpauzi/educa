@@ -1,4 +1,5 @@
-import { hideNotif, tabItems, tabTriggers } from './elements.js';
+import { getNotificationComponent } from './components.js';
+import { hideNotif, notifGroup, tabItems, tabTriggers } from './elements.js';
 
 tabTriggers.forEach(trigger => {
     trigger.addEventListener('click', function () {
@@ -34,4 +35,6 @@ export const copyText = (TextToCopy) => {
     alert("Copied!");
 }
 
-
+export const showNotification = (data = {}) => {
+    notifGroup.innerHTML = getNotificationComponent(data);
+}

@@ -1,6 +1,6 @@
-import { copyInviteLinkButton, studentsGroup } from "./elements.js";
+import { copyClassCodeButton, copyInviteLinkButton, studentsGroup, updateClassCodeButton } from "./elements.js";
 import { getSpinnerComponent, getStudentCardComponent, getTextMessageComponent } from "./components.js";
-import { copyText } from "./main.js";
+import { copyText, showNotification } from "./main.js";
 import { fetchData } from "./utils.js";
 
 const getInviteLink = async (classId) => {
@@ -41,6 +41,38 @@ const showStudents = async (classId) => {
 window.showStudents = showStudents;
 
 copyInviteLinkButton && copyInviteLinkButton.addEventListener('click', async function () {
+    const initialTextContent = this.textContent;
+    this.innerHTML = getSpinnerComponent({ isSmall: true, noPadding: true });
     const { inviteLinkURL } = await getInviteLink(this.dataset.classid);
+    this.textContent = initialTextContent;
     copyText(inviteLinkURL);
+});
+
+copyClassCodeButton && copyClassCodeButton.addEventListener('click', async function () {
+    const initialTextContent = this.textContent;
+    this.innerHTML = getSpinnerComponent({ isSmall: true, noPadding: true });
+    const { code } = await getInviteLink(this.dataset.classid);
+    this.textContent = initialTextContent;
+    copyText(code);
+});
+
+const updateClassCode = async (classId) => {
+    const { res, data } = await fetchData({
+        url: `/classes/${classId}/code`,
+        options: {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    });
+    return { res, data };
+}
+
+updateClassCodeButton && updateClassCodeButton.addEventListener('click', async function () {
+    const initialTextContent = this.textContent;
+    this.innerHTML = getSpinnerComponent({ isSmall: true, noPadding: true });
+    const { res, data } = await updateClassCode(this.dataset.classid);
+    showNotification({ message: data.message, type: res.status == 200 ? 'success' : 'error' });
+    this.textContent = initialTextContent;
 });

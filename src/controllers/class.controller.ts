@@ -87,8 +87,9 @@ export const inviteLink = async (req: Request, res: Response): Promise<any> => {
         const { id } = req.params;
         const _class = await Class.findByPk(Number(id));
         if (_class) {
-            const inviteLinkURL = `${getFullBaseURL(req)}/classes/${id}/invite?code=${_class?.getDataValue('code')}`;
-            return res.status(200).json({ inviteLinkURL });
+            const code = _class?.getDataValue('code');
+            const inviteLinkURL = `${getFullBaseURL(req)}/classes/${id}/invite?code=${code}`;
+            return res.status(200).json({ inviteLinkURL, code });
         } else {
             return res.status(404).json({ message: "Class does not exist." });
         }
@@ -140,6 +141,32 @@ export const students = async (req: Request, res: Response): Promise<any> => {
             return res.status(200).json({ students });
         }
         return res.redirect('/');
+    } catch (error: any) {
+        console.log(error);
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+export const updateClassCode = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { id } = req.params;
+        const _class = await Class.findByPk(Number(id), { include: User });
+        const { id: userId } = <IUser>req.user;
+        const code = await getAvailableCode();
+
+        if (_class) {
+            // if user try to update class code  belongs to someone else
+            if (_class.getDataValue('User').id == userId) {
+                _class.update({
+                    code
+                });
+                return res.status(200).json({ message: 'The code of this class successfully updated.' })
+            } else {
+                return res.status(403).json({ message: 'You don\'t have any permission to update the class code of this class.' })
+            }
+        } else {
+            return res.status(404).json({ message: 'Class does not exist.' })
+        }
     } catch (error: any) {
         console.log(error);
         return res.status(500).json({ message: error.message });

@@ -27,7 +27,7 @@
                         invite link</button>
                     <button
                         class="bg-green-100 text-green-500 font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none"
-                        id="copyClassCodeButton">Copy
+                        id="copyClassCodeButton" data-classId="{{classData.dataValues.id}}">Copy
                         class code</button>
                 </div>
             </div>
@@ -40,7 +40,8 @@
                 <h1 class="text-3xl text-gray-800">Settings</h1>
                 <div>
                     <button
-                        class="bg-green-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none">Update
+                        class="bg-green-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none"
+                        id="updateClassCodeButton" data-classId="{{classData.dataValues.id}}">Update
                         class code</button>
                     <button
                         class="bg-red-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-red-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none">Delete
