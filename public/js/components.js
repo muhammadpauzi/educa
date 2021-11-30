@@ -65,7 +65,7 @@ export const getNotificationComponent = ({ message, type = "success" }) => {
                     <div class="ml-2 mr-6 max-w-xs">
                         <span class="font-semibold${type == 'success' ? ' text-green-500' : ' text-red-500'}">${message}</span>
                     </div>
-                    <div class="cursor-pointer" onclick="handleHideNotif(this)" data-target="#notifFromJS">
+                    <div class="cursor-pointer" onclick="handleHideNotif(null, this)" data-target="#notifFromJS">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="#6b7280">
                             <path

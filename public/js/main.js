@@ -19,7 +19,7 @@ tabTriggers.forEach(trigger => {
     });
 });
 
-const handleHideNotif = (element) => {
+function handleHideNotif(e, element) {
     // 'element' is used for event from tag html
     document.querySelector(element ? element.dataset.target : this.dataset.target).remove();
 }
