@@ -1,5 +1,5 @@
 export const getSpinnerComponent = ({ isSmall = false, noPadding = false }) => {
-    const dimensions = isSmall ? 'h-4 w-4' : 'h-12 w-12'
+    const dimensions = isSmall ? 'h-4 w-4' : 'h-12 w-12';
     const padding = noPadding ? '' : 'py-10';
     return `<div class="${padding}">
     <div class="loader mx-auto ease-linear rounded-full border-2 border-t-2 border-gray-200 ${dimensions}"
@@ -65,7 +65,7 @@ export const getNotificationComponent = ({ message, type = "success" }) => {
                     <div class="ml-2 mr-6 max-w-xs">
                         <span class="font-semibold${type == 'success' ? ' text-green-500' : ' text-red-500'}">${message}</span>
                     </div>
-                    <div class="cursor-pointer" id="hideNotif" data-target="#notifFromJS">
+                    <div class="cursor-pointer" onclick="handleHideNotif(this)" data-target="#notifFromJS">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="#6b7280">
                             <path

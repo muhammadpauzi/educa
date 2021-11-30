@@ -13,7 +13,7 @@ const getClasses = async () => {
 }
 
 const showClasses = async () => {
-    classesGroup.innerHTML = getSpinnerComponent();
+    classesGroup.innerHTML = getSpinnerComponent({});
     const { user } = await getClasses();
     if (user.Classes.length > 0) {
         let cardComponents = '';

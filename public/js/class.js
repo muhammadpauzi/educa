@@ -1,4 +1,4 @@
-import { copyClassCodeButton, copyInviteLinkButton, studentsGroup, updateClassCodeButton } from "./elements.js";
+import { copyClassCodeButton, copyInviteLinkButton, hideNotif, studentsGroup, updateClassCodeButton, updateElementWithID } from "./elements.js";
 import { getSpinnerComponent, getStudentCardComponent, getTextMessageComponent } from "./components.js";
 import { copyText, showNotification } from "./main.js";
 import { fetchData } from "./utils.js";
@@ -23,7 +23,7 @@ const getStudents = async (classId) => {
 }
 
 const showStudents = async (classId) => {
-    studentsGroup.innerHTML = getSpinnerComponent();
+    studentsGroup.innerHTML = getSpinnerComponent({});
     const { students } = await getStudents(classId);
     console.log(students);
     if (students.length > 0) {

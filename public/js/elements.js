@@ -7,3 +7,12 @@ export const copyInviteLinkButton = document.getElementById('copyInviteLinkButto
 export const copyClassCodeButton = document.getElementById('copyClassCodeButton');
 export const notifGroup = document.getElementById('notifGroup');
 export const updateClassCodeButton = document.getElementById('updateClassCodeButton');
+
+export const updateElementWithID = (element) => {
+    const { id } = element;
+    const existsElement = document.getElementById(id);
+    if (!existsElement)
+        return false;
+    element = existsElement;
+    return true;
+}
