@@ -172,3 +172,26 @@ export const updateClassCode = async (req: Request, res: Response): Promise<any>
         return res.status(500).json({ message: error.message });
     }
 }
+
+export const deleteClass = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { id } = req.params;
+        const _class = await Class.findByPk(Number(id), { include: User });
+        const { id: userId } = <IUser>req.user;
+
+        if (_class) {
+            // if user try to delete class belongs to someone else
+            if (_class.getDataValue('User').id == userId) {
+                await _class.destroy();
+                req.flash('success', 'The class successfully deleted.');
+            } else {
+                req.flash('error', 'You don\'t have any permission to delete this class.');
+            }
+        } else {
+            req.flash('error', 'Class does not exist.');
+        }
+        return res.redirect(`/`);
+    } catch (error: any) {
+        console.log(error);
+    }
+}

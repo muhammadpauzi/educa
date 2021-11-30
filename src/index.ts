@@ -1,9 +1,10 @@
-import express, { Application } from 'express';
+import express, { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import session from 'express-session';
 import flash from 'connect-flash';
 import * as exphbs from 'express-handlebars';
 import { initPassport } from './configs/passport.config';
+import methodOverride from 'method-override';
 
 // routes
 import { dashboardRouter, authRouter, classesRouter, studentsRouter } from './routes';
@@ -36,6 +37,16 @@ app.use(express.static('public'));
 
 // request body
 app.use(express.urlencoded({ extended: true }));
+
+// method override
+app.use(methodOverride(function (req: Request, res: Response) {
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+        // look in urlencoded POST bodies and delete it
+        var method = req.body._method
+        delete req.body._method
+        return method
+    }
+}));
 
 // routes
 app.use('/', authRouter);

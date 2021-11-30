@@ -43,9 +43,12 @@
                         class="bg-green-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none"
                         id="updateClassCodeButton" data-classId="{{classData.dataValues.id}}">Update
                         class code</button>
-                    <button
-                        class="bg-red-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-red-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none">Delete
-                        this class</button>
+                    <form action="/classes/{{classData.dataValues.id}}" method="post" class="inline-block">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button onclick="return confirm('Are you sure to delete this class?');"
+                            class="bg-red-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-red-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none">Delete
+                            this class</button>
+                    </form>
                 </div>
             </div>
         </div>
