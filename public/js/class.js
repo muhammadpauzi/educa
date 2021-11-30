@@ -25,7 +25,6 @@ const getStudents = async (classId) => {
 const showStudents = async (classId) => {
     studentsGroup.innerHTML = getSpinnerComponent({});
     const { students } = await getStudents(classId);
-    console.log(students);
     if (students.length > 0) {
         let studentCardComponents = '';
         students.forEach(student => {
