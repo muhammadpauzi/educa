@@ -10,6 +10,7 @@ import { getAvailableCode } from "../helpers/class.helper";
 import moment from 'moment';
 import { getFullBaseURL } from "../utils/url.util";
 import Student from "../models/student.model";
+import { validateJoinClass } from "../validators/join.validator";
 
 export const index = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -76,6 +77,57 @@ export const store = async (req: Request, res: Response): Promise<any> => {
                 errors
             }
         });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const join = (req: Request, res: Response): any => {
+    return renderWithUserDataAndFlash({
+        req, res,
+        title: CREATE_CLASS_TITLE,
+        path: 'classes/join'
+    });
+}
+
+export const joinPost = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { code }: IClass = req.body;
+        const classData = await Class.findOne({ where: { code }, include: User });
+        const { id: userId } = <IUser>req.user;
+
+        // validate request
+        const errors = await validateJoinClass({ code });
+        // if validate success
+        if (errors === true) {
+            if (classData) {
+                if (classData.getDataValue('User').id == userId) {
+                    req.flash('error', 'You can\'t invite to this class.');
+                } else {
+                    // check if user has invited
+                    const student = await Student.findOne({ where: { UserId: userId, ClassId: classData.getDataValue('id') } });
+                    if (student) {
+                        req.flash('error', 'You have invited!');
+                    } else {
+                        await Student.create({ UserId: userId, ClassId: classData.getDataValue('id') });
+                        req.flash('success', 'You have successfully invited!');
+                        return res.redirect(`/`);
+                    }
+                }
+            } else {
+                req.flash('error', 'The class with the code does not exist.');
+            }
+        } else {
+            return renderWithUserDataAndFlash({
+                req, res,
+                title: CREATE_CLASS_TITLE,
+                path: 'classes/join',
+                data: {
+                    errors
+                }
+            });
+        }
+        return res.redirect(`/classes/join`);
     } catch (error) {
         console.log(error);
     }
