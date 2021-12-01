@@ -1,4 +1,4 @@
-import { copyClassCodeButton, copyInviteLinkButton, hideNotif, studentsGroup, updateClassCodeButton, updateElementWithID } from "./elements.js";
+import { copyClassCodeButton, copyCodeButton, copyInviteLinkButton, hideNotif, studentsGroup, updateClassCodeButton, updateElementWithID } from "./elements.js";
 import { getSpinnerComponent, getStudentCardComponent, getTextMessageComponent } from "./components.js";
 import { copyText, showNotification } from "./main.js";
 import { fetchData } from "./utils.js";
@@ -47,13 +47,15 @@ copyInviteLinkButton && copyInviteLinkButton.addEventListener('click', async fun
     copyText(inviteLinkURL);
 });
 
-copyClassCodeButton && copyClassCodeButton.addEventListener('click', async function () {
+async function copyClassCode() {
     const initialTextContent = this.textContent;
     this.innerHTML = getSpinnerComponent({ isSmall: true, noPadding: true });
     const { code } = await getInviteLink(this.dataset.classid);
     this.textContent = initialTextContent;
     copyText(code);
-});
+}
+
+(copyClassCodeButton && copyCodeButton) && [copyClassCodeButton, copyCodeButton].forEach(btn => btn.addEventListener('click', copyClassCode));
 
 const updateClassCode = async (classId) => {
     const { res, data } = await fetchData({
