@@ -1,0 +1,47 @@
+<div class="max-w-xl mx-auto py-5">
+    <div class="bg-white border-2 mx-auto border-gray-200 p-3 py-10 rounded-md w-full">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-bold text-green-500 mb-2">Update {{classData.dataValues.name}} class</h1>
+            <p class="text-sm text-gray-500">Fill all the inputs to update the class</p>
+        </div>
+
+        <div class="px-4">
+            <form action="" method="post">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="mb-3">
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                        Class name <sup class="text-red-500">*</sup>
+                    </label>
+                    <input type="text" name="name" id="name"
+                        class="focus:ring-green-500 focus:border-green-500 outline-none appearance-none block w-full text-md p-3 rounded-none border-2 rounded-md sm:text-sm border-gray-200"
+                        value="{{classData.dataValues.name}}">
+                    {{#if errors.name}}
+                    <p class="mt-2 text-sm text-red-500">
+                        {{errors.name}}
+                    </p>
+                    {{/if}}
+                </div>
+                <div class="mb-3">
+                    <label for="room" class="block text-sm font-medium text-gray-700 mb-2">
+                        Room <sup class="text-red-500">*</sup>
+                    </label>
+                    <input type="text" name="room" id="room"
+                        class="focus:ring-green-500 focus:border-green-500 outline-none appearance-none block w-full text-md p-3 rounded-none border-2 rounded-md sm:text-sm border-gray-200"
+                        value="{{classData.dataValues.room}}">
+                    {{#if errors.room}}
+                    <p class="mt-2 text-sm text-red-500">
+                        {{errors.room}}
+                    </p>
+                    {{/if}}
+                </div>
+                <div class="mt-6 grid grid-cols-2 gap-2">
+                    <button
+                        class="bg-green-500 text-white font-bold rounded-md py-3 px-4 block focus:ring-green-500 focus:ring-offset-2 focus:ring-2 w-full appearance-none outline-none">Update
+                        Class</button>
+                    <a href="/"
+                        class="bg-white py-3 px-4 border border-gray-300 rounded-md shadow-sm font-medium text-gray-700 block text-center hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

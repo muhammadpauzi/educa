@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CLASS_TITLE, CREATE_CLASS_TITLE } from "../constants/title.contant";
+import { CLASS_TITLE, CREATE_CLASS_TITLE, UPDATE_CLASS_TITLE } from "../constants/title.contant";
 import { renderWithUserDataAndFlash } from "../helpers/render.helper";
 import IUser from "../interfaces/user.interface";
 import IClass from "../interfaces/class.interface";
@@ -128,6 +128,79 @@ export const joinPost = async (req: Request, res: Response): Promise<any> => {
             });
         }
         return res.redirect(`/classes/join`);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const update = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { id } = req.params;
+        const classData = await Class.findByPk(id, { include: User });
+        const { id: userId } = <IUser>req.user;
+
+        if (classData) {
+            if (classData.getDataValue('User').id == userId) {
+                return renderWithUserDataAndFlash({
+                    req, res,
+                    title: UPDATE_CLASS_TITLE,
+                    path: 'classes/update',
+                    data: {
+                        classData
+                    }
+                });
+            } else {
+                req.flash('error', 'You don\'t have any permission to update this class.');
+            }
+        } else {
+            req.flash('error', 'The class does not exist.');
+        }
+        return res.redirect(`/`);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const updatePut = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { id } = req.params;
+        const classData = await Class.findByPk(id, { include: User });
+        const { id: userId } = <IUser>req.user;
+        const { name, room }: IClass = req.body;
+
+        if (classData) {
+            const code = classData?.getDataValue('code');
+            // validate request
+            const errors = await validateClass({ name, room, code });
+
+            // if validate success
+            if (errors === true) {
+                if (classData.getDataValue('User').id == userId) {
+                    await classData.update({
+                        name,
+                        room,
+                        code
+                    });
+                    req.flash('success', 'You have successfully updated the class.');
+                } else {
+                    req.flash('error', 'You don\'t have any permission to update this class.');
+                }
+            } else {
+                return renderWithUserDataAndFlash({
+                    req, res,
+                    title: UPDATE_CLASS_TITLE,
+                    path: 'classes/update',
+                    data: {
+                        errors,
+                        classData
+                    }
+                });
+            }
+        } else {
+            req.flash('error', 'The class does not exist.');
+            return res.redirect(`/`);
+        }
+        return res.redirect(`/classes/${id}`);
     } catch (error) {
         console.log(error);
     }
