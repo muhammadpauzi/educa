@@ -4,6 +4,7 @@ import { renderWithUserDataAndFlash } from "../helpers/render.helper";
 import IUser from "../interfaces/user.interface";
 import IClass from "../interfaces/class.interface";
 import { Class, User } from "../models";
+import { Op } from 'sequelize';
 import { validateClass } from '../validators/class.validator';
 import { getAvailableCode } from "../helpers/class.helper";
 import moment from 'moment';
@@ -16,6 +17,27 @@ export const index = async (req: Request, res: Response): Promise<any> => {
             const { id } = <IUser>req.user;
             const user = await User.findByPk(id, { order: [[Class, 'createdAt', 'DESC']], include: Class });
             return res.status(200).json({ user });
+        }
+        return res.redirect('/');
+    } catch (error: any) {
+        console.log(error);
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+export const followedClasses = async (req: Request, res: Response): Promise<any> => {
+    try {
+        if (process.env.NODE_ENV == "development" || req.headers["content-type"] == 'application/json') { // prevent if opened from browser (for production)
+            const { id } = <IUser>req.user;
+            const students = await Student.findAll({
+                where: {
+                    UserId: id,
+                    ClassId: {
+                        [Op.ne]: null
+                    }
+                }, include: [Class, User]
+            });
+            return res.status(200).json({ students });
         }
         return res.redirect('/');
     } catch (error: any) {

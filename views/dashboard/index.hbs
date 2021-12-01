@@ -10,10 +10,10 @@
             data-target="#tabItemClasses" onclick="showClasses();">Classes</button>
         <button
             class="outline-none appearance-none hover:border-green-200 py-3 px-2 bg-white border-b-2 border-gray-200 font-bold text-gray-800 tab-triggers"
-            data-target="#tabItemPresences">Presences</button>
+            data-target="#tabItemFollowed" onclick="showFollowedClasses();">Followed Classes</button>
         <button
             class="outline-none appearance-none hover:border-green-200 py-3 px-2 bg-white border-b-2 border-gray-200 font-bold text-gray-800 tab-triggers"
-            data-target="#tabItemWorks">Works</button>
+            data-target="#tabItemPresences">Presences</button>
     </div>
 
     <div class="py-4">
@@ -40,11 +40,31 @@
                 </div> --}}
             </div>
         </div>
+        <div class="tab-items" style="display: none;" id="tabItemFollowed">
+            <div class="flex items-center justify-between mb-4">
+                <h1 class="text-3xl text-gray-800">Followed Classes</h1>
+                <a href="/classes/join"
+                    class="bg-green-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2">Join
+                    Class</a>
+            </div>
+            <div id="followedClasses" class="space-y-2">
+                {{!-- <div class="bg-white border-2 border-gray-200 p-4 rounded-md w-full">
+                    <div class="mb-5">
+                        <h2 class="text-2xl text-gray-800 font-bold"><a href=""
+                                class="text-green-500 hover:underline">My
+                                First
+                                Class</a></h2>
+                        <h3 class="text-lg text-gray-600">XII</h3>
+                    </div>
+
+                    <div class="flex space-x-3 items-center">
+                        <a href="" class="text-md text-sm font-medium text-gray-800">Muhammad Pauzi</a>
+                    </div>
+                </div> --}}
+            </div>
+        </div>
         <div class="tab-items" style="display: none;" id="tabItemPresences">
             <h1 class="text-3xl text-gray-800">Presences</h1>
-        </div>
-        <div class="tab-items" style="display: none;" id="tabItemWorks">
-            <h1 class="text-3xl text-gray-800">Works</h1>
         </div>
     </div>
 </div>
