@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="tab-items" style="display: none;" id="tabItemSettings">
-            <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center justify-between mb-8">
                 <h1 class="text-3xl text-gray-800">Settings</h1>
                 <div>
                     <button
@@ -49,6 +49,29 @@
                             class="bg-red-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-red-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none">Delete
                             this class</button>
                     </form>
+                </div>
+            </div>
+            <hr class="block-w-full bg-gray-800 mb-4">
+            <div>
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-lg text-green-500 font-bold">Class Name</p>
+                        <p class="text-lg text-gray-800 font-medium">{{classData.dataValues.name}}</p>
+                    </div>
+                    <div>
+                        <p class="text-lg text-green-500 font-bold">Room</p>
+                        <p class="text-lg text-gray-800 font-medium">{{classData.dataValues.room}}</p>
+                    </div>
+                    <div>
+                        <p class="text-lg text-green-500 font-bold">Created At</p>
+                        <p class="text-lg text-gray-800 font-medium">{{dateFormatDefault
+                            classData.dataValues.createdAt}}</p>
+                    </div>
+                    <div>
+                        <p class="text-lg text-green-500 font-bold">Updated At</p>
+                        <p class="text-lg text-gray-800 font-medium">{{dateFormatDefault
+                            classData.dataValues.updatedAt}}</p>
+                    </div>
                 </div>
             </div>
         </div>
