@@ -37,7 +37,7 @@ export const copyText = (TextToCopy) => {
     document.execCommand("copy");
     document.body.removeChild(TempText);
 
-    alert("Copied!");
+    showNotification({ message: "Successfully copied!" });
 }
 
 export const showNotification = (data = {}) => {
