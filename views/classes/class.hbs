@@ -69,8 +69,14 @@
                     </div>
                     <div>
                         <p class="text-lg text-green-500 font-bold">Updated At</p>
-                        <p class="text-lg text-gray-800 font-medium">{{dateFormatDefault
-                            classData.dataValues.updatedAt}}</p>
+                        <p class="text-lg text-gray-800 font-medium">{{#if (isSame
+                            (dateFormatDefault classData.dataValues.createdAt) (dateFormatDefault
+                            classData.dataValues.updatedAt))
+                            }}
+                            Not updated yet
+                            {{else}}
+                            {{dateFormatDefault classData.dataValues.updatedAt}}
+                            {{/if}}</p>
                     </div>
                 </div>
                 <div class="flex justify-end items-center">
