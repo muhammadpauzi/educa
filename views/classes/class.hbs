@@ -21,6 +21,7 @@
                 <h1 class="text-3xl text-gray-800">Students</h1>
                 <div>
                     {{!-- link invite /students/{{classData.dataValues.id}}/invite / (create) --}}
+                    {{#if (isSame classData.dataValues.UserId user.id)}}
                     <button
                         class="bg-green-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none"
                         id="copyInviteLinkButton" data-classId="{{classData.dataValues.id}}">Copy
@@ -29,6 +30,7 @@
                         class="bg-green-100 text-green-500 font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none"
                         id="copyClassCodeButton" data-classId="{{classData.dataValues.id}}">Copy
                         class code</button>
+                    {{/if}}
                 </div>
             </div>
             <div id="students" class="space-y-2">
@@ -39,6 +41,7 @@
             <div class="flex items-center justify-between mb-8">
                 <h1 class="text-3xl text-gray-800">Settings</h1>
                 <div>
+                    {{#if (isSame classData.dataValues.UserId user.id)}}
                     <button
                         class="bg-green-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none"
                         id="updateClassCodeButton" data-classId="{{classData.dataValues.id}}">Update
@@ -49,6 +52,7 @@
                             class="bg-red-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-red-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none">Delete
                             this class</button>
                     </form>
+                    {{/if}}
                 </div>
             </div>
             <hr class="block-w-full bg-gray-800 mb-4">
@@ -62,15 +66,17 @@
                         <p class="text-lg text-green-500 font-bold">Room</p>
                         <p class="text-lg text-gray-800 font-medium">{{classData.dataValues.room}}</p>
                     </div>
+                    {{#if (isSame classData.dataValues.UserId user.id)}}
                     <div>
                         <p class="text-lg text-green-500 font-bold">Code</p>
                         <p class="text-lg text-gray-800 font-medium flex items-center justify-between">
                             <span>{{classData.dataValues.code}}</span> <button id="copyCodeButton"
                                 class="bg-green-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none"
-                                data-classId="{{classData.dataValues.id}}"                                                                                                                                                                                                                      >Copy
+                                data-classId="{{classData.dataValues.id}}">Copy
                                 code</button>
                         </p>
                     </div>
+                    {{/if}}
                     <div>
                         <p class="text-lg text-green-500 font-bold">Created At</p>
                         <p class="text-lg text-gray-800 font-medium">{{dateFormatDefault
@@ -89,9 +95,11 @@
                     </div>
                 </div>
                 <div class="flex justify-end items-center">
+                    {{#if (isSame classData.dataValues.UserId user.id)}}
                     <a href="/classes/{{classData.dataValues.id}}/update"
                         class="bg-green-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none">Update
                         class</a>
+                    {{/if}}
                 </div>
             </div>
         </div>

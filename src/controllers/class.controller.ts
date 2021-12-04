@@ -207,11 +207,10 @@ export const updatePut = async (req: Request, res: Response): Promise<any> => {
 
 export const _class = async (req: Request, res: Response): Promise<any> => {
     try {
-        const { id: userId } = <IUser>req.user;
         const { id } = req.params;
         const classData = await Class.findByPk(Number(id), { include: User });
 
-        if (classData && classData.getDataValue('User').id == userId) {
+        if (classData) {
             return renderWithUserDataAndFlash({
                 req, res,
                 title: CLASS_TITLE,
@@ -221,7 +220,7 @@ export const _class = async (req: Request, res: Response): Promise<any> => {
                 }
             });
         } else {
-            req.flash('error', 'Class doesn\'t exist or you don\'t have any permission.')
+            req.flash('error', 'Class doesn\'t exist.')
             return res.redirect('/');
         }
     } catch (error: any) {
