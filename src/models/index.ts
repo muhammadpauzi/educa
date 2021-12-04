@@ -24,5 +24,5 @@ Student.belongsTo(User);
 // });
 
 export {
-    User, Class
+    User, Class, Student
 }

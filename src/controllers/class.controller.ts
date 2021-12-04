@@ -3,13 +3,12 @@ import { CLASS_TITLE, CREATE_CLASS_TITLE, UPDATE_CLASS_TITLE } from "../constant
 import { renderWithUserDataAndFlash } from "../helpers/render.helper";
 import IUser from "../interfaces/user.interface";
 import IClass from "../interfaces/class.interface";
-import { Class, User } from "../models";
+import { Class, User, Student } from "../models";
 import { Op } from 'sequelize';
 import { validateClass } from '../validators/class.validator';
 import { getAvailableCode } from "../helpers/class.helper";
 import moment from 'moment';
 import { getFullBaseURL } from "../utils/url.util";
-import Student from "../models/student.model";
 import { validateJoinClass } from "../validators/join.validator";
 
 export const index = async (req: Request, res: Response): Promise<any> => {

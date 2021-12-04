@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { Class } from "../models";
-import Student from "../models/student.model";
+import { Class, Student } from "../models";
 
 export const index = async (req: Request, res: Response): Promise<any> => {
     try {
