@@ -9,6 +9,8 @@ import handleBarsHelpers from './helpers/handlebars.helper';
 
 // routes
 import { dashboardRouter, authRouter, classesRouter, studentsRouter } from './routes';
+import { renderWithUserDataAndFlash } from './helpers/render.helper';
+import { PAGE_NOT_FOUND } from './constants/title.contant';
 
 dotenv.config();
 
@@ -54,6 +56,13 @@ app.use('/', authRouter);
 app.use('/', dashboardRouter);
 app.use('/classes', classesRouter);
 app.use('/students', studentsRouter);
+app.use((req: Request, res: Response) => {
+    return renderWithUserDataAndFlash({
+        req, res,
+        title: PAGE_NOT_FOUND,
+        path: '404'
+    })
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
