@@ -1,15 +1,17 @@
 import { Request, Response } from "express";
-import { CLASS_TITLE, CREATE_CLASS_TITLE, UPDATE_CLASS_TITLE } from "../constants/title.contant";
+import { CLASS_TITLE, CREATE_CLASS_TITLE, CREATE_WORK_TITLE, UPDATE_CLASS_TITLE } from "../constants/title.contant";
 import { renderWithUserDataAndFlash } from "../helpers/render.helper";
 import IUser from "../interfaces/user.interface";
 import IClass from "../interfaces/class.interface";
-import { Class, User, Student } from "../models";
+import { Class, User, Student, Work } from "../models";
 import { Op } from 'sequelize';
 import { validateClass } from '../validators/class.validator';
 import { getAvailableCode } from "../helpers/class.helper";
 import moment from 'moment';
 import { getFullBaseURL } from "../utils/url.util";
 import { validateJoinClass } from "../validators/join.validator";
+import IWork from "../interfaces/work.interface";
+import { validateWork } from "../validators/work.validator";
 
 export const index = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -340,6 +342,53 @@ export const deleteClass = async (req: Request, res: Response): Promise<any> => 
         }
         return res.redirect(`/`);
     } catch (error: any) {
+        console.log(error);
+    }
+}
+
+export const createWork = async (req: Request, res: Response): Promise<any> => {
+    return renderWithUserDataAndFlash({
+        req, res,
+        title: CREATE_WORK_TITLE,
+        path: 'works/create'
+    });
+}
+
+export const createWorkPost = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { id } = req.params;
+        const classData = await Class.findByPk(id, { include: User });
+        const { id: userId } = <IUser>req.user;
+        const { name, description }: IWork = req.body;
+
+        if (classData) {
+            // validate request
+            const errors = await validateWork({ name, description });
+
+            // if validate success
+            if (errors === true) {
+                if (classData.getDataValue('User').id == userId) {
+                    await Work.create({ name, description, ClassId: id, UserId: userId });
+                    req.flash('success', 'Work has successfully created!');
+                    return res.redirect(`/classes/${id}`);
+                } else {
+                    req.flash('error', 'You don\'t have any permission to create work of this class.');
+                }
+            } else { // if validate fail/error
+                return renderWithUserDataAndFlash({
+                    req, res,
+                    title: CREATE_WORK_TITLE,
+                    path: 'works/create',
+                    data: {
+                        errors
+                    }
+                });
+            }
+        } else {
+            req.flash('error', 'The class does not exist.');
+            return res.redirect(`/`);
+        }
+    } catch (error) {
         console.log(error);
     }
 }

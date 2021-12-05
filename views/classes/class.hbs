@@ -14,7 +14,16 @@
 
     <div class="py-4">
         <div class="tab-items" id="tabItemWorks">
-            <h2 class="text-3xl text-gray-800">Works</h2>
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl text-gray-800">Works</h2>
+                <div>
+                    {{#if (isSame classData.dataValues.UserId user.id)}}
+                    <a href="/classes/{{classData.dataValues.id}}/works/create"
+                        class="bg-green-500 text-white font-bold rounded-md py-2 text-sm px-3 focus:ring-green-500 focus:ring-offset-2 focus:ring-2 outline-none appearance-none">Create
+                        Work</a>
+                    {{/if}}
+                </div>
+            </div>
         </div>
         <div class="tab-items" style="display: none;" id="tabItemStudents">
             <div class="flex items-center justify-between mb-4">

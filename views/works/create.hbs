@@ -1,0 +1,61 @@
+<div class="max-w-xl mx-auto py-5">
+    <div class="bg-white border-2 mx-auto border-gray-200 p-3 py-10 rounded-md w-full">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-bold text-green-500 mb-2">Create your work</h1>
+            <p class="text-sm text-gray-500">Fill all the inputs to create a new work</p>
+        </div>
+
+        <div class="px-4">
+            <form action="" method="post">
+                <div class="mb-3">
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                        Work name <sup class="text-red-500">*</sup>
+                    </label>
+                    <input type="text" name="name" id="name"
+                        class="focus:ring-green-500 focus:border-green-500 outline-none appearance-none block w-full text-md p-3 rounded-none border-2 rounded-md sm:text-sm border-gray-200">
+                    {{#if errors.name}}
+                    <p class="mt-2 text-sm text-red-500">
+                        {{errors.name}}
+                    </p>
+                    {{/if}}
+                </div>
+                <div class="mb-3">
+                    <label for="type" class="block text-sm font-medium text-gray-700 mb-2">
+                        Type <sup class="text-red-500">*</sup>
+                    </label>
+                    <select name="type" id="type"
+                        class="focus:ring-green-500 focus:border-green-500 outline-none block w-full text-md p-3 rounded-none border-2 rounded-md sm:text-sm border-gray-200">
+                        <option value="Question">Question</option>
+                        <option value="Material">Material</option>
+                        <option value="Assignment">Assignment</option>
+                    </select>
+                    {{#if errors.type}}
+                    <p class="mt-2 text-sm text-red-500">
+                        {{errors.type}}
+                    </p>
+                    {{/if}}
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
+                        Description <sup class="text-red-500">*</sup>
+                    </label>
+                    <textarea name="description" id="description"
+                        class="focus:ring-green-500 focus:border-green-500 outline-none block w-full text-md p-3 rounded-none border-2 rounded-md sm:text-sm border-gray-200"
+                        rows="5"></textarea>
+                    {{#if errors.description}}
+                    <p class="mt-2 text-sm text-red-500">
+                        {{errors.description}}
+                    </p>
+                    {{/if}}
+                </div>
+                <div class="mt-6 grid grid-cols-2 gap-2">
+                    <button
+                        class="bg-green-500 text-white font-bold rounded-md py-3 px-4 block focus:ring-green-500 focus:ring-offset-2 focus:ring-2 w-full appearance-none outline-none">Create
+                        Work</button>
+                    <a href="/"
+                        class="bg-white py-3 px-4 border border-gray-300 rounded-md shadow-sm font-medium text-gray-700 block text-center hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
