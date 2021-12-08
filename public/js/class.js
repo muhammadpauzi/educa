@@ -1,4 +1,4 @@
-import { copyClassCodeButton, copyCodeButton, copyInviteLinkButton, hideNotif, studentsGroup, updateClassCodeButton, updateElementWithID, worksGroup } from "./elements.js";
+import { copyClassCodeButton, copyCodeButton, copyInviteLinkButton, hideNotif, parentClass, studentsGroup, updateClassCodeButton, updateElementWithID, worksGroup } from "./elements.js";
 import { getSpinnerComponent, getStudentCardComponent, getTextMessageComponent, getWorkCardComponent } from "./components.js";
 import { copyText, showNotification } from "./main.js";
 import { fetchData } from "./utils.js";
@@ -106,3 +106,4 @@ const showWorks = async (classId) => {
 
 // for call in html tag cause type module
 window.showWorks = showWorks;
+showWorks(parentClass.dataset.classId);

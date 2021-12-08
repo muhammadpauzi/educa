@@ -5,6 +5,7 @@ export const followedClassesGroup = document.getElementById('followedClasses');
 export const studentsGroup = document.getElementById('students');
 export const worksGroup = document.getElementById('works');
 export const hideNotif = document.getElementById('hideNotif');
+export const parentClass = document.getElementById('parentClass');
 export const copyInviteLinkButton = document.getElementById('copyInviteLinkButton');
 export const copyClassCodeButton = document.getElementById('copyClassCodeButton');
 export const copyCodeButton = document.getElementById('copyCodeButton');
