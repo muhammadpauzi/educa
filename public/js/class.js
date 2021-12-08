@@ -1,5 +1,5 @@
-import { copyClassCodeButton, copyCodeButton, copyInviteLinkButton, hideNotif, studentsGroup, updateClassCodeButton, updateElementWithID } from "./elements.js";
-import { getSpinnerComponent, getStudentCardComponent, getTextMessageComponent } from "./components.js";
+import { copyClassCodeButton, copyCodeButton, copyInviteLinkButton, hideNotif, studentsGroup, updateClassCodeButton, updateElementWithID, worksGroup } from "./elements.js";
+import { getSpinnerComponent, getStudentCardComponent, getTextMessageComponent, getWorkCardComponent } from "./components.js";
 import { copyText, showNotification } from "./main.js";
 import { fetchData } from "./utils.js";
 
@@ -77,3 +77,32 @@ updateClassCodeButton && updateClassCodeButton.addEventListener('click', async f
     showNotification({ message: data.message, type: res.status == 200 ? 'success' : 'error' });
     this.textContent = initialTextContent;
 });
+
+const getWorks = async (classId) => {
+    const { res, data } = await fetchData({
+        url: `/classes/${classId}/works`,
+        options: {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    });
+    return data;
+}
+
+const showWorks = async (classId) => {
+    worksGroup.innerHTML = getSpinnerComponent({});
+    const { classData } = await getWorks(classId);
+    if (classData.Works.length > 0) {
+        let workCardComponents = '';
+        classData.Works.forEach(work => {
+            workCardComponents += getWorkCardComponent({ ...work, classId });
+        });
+        worksGroup.innerHTML = workCardComponents;
+    } else {
+        worksGroup.innerHTML = getTextMessageComponent('Works does not exist.');
+    }
+}
+
+// for call in html tag cause type module
+window.showWorks = showWorks;

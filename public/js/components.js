@@ -38,6 +38,14 @@ export const getStudentCardComponent = ({ name, image }) => {
             </div>`
 }
 
+export const getWorkCardComponent = ({ id, name, classId }) => {
+    return `<div class="bg-white border-2 border-gray-200 p-4 rounded-md w-full">
+                <div class="flex items-center space-x-3">
+                    <h2 class="text-lg text-green-500 font-bold hover:underline"><a href="/classes/${classId}/works/${id}">${name}</a></h2>
+                </div>
+            </div>`
+}
+
 export const getNotificationComponent = ({ message, type = "success" }) => {
     let icon = ''
     if (type == "success") {

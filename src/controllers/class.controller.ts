@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CLASS_TITLE, CREATE_CLASS_TITLE, CREATE_WORK_TITLE, UPDATE_CLASS_TITLE } from "../constants/title.contant";
+import { CLASS_TITLE, CREATE_CLASS_TITLE, CREATE_WORK_TITLE, UPDATE_CLASS_TITLE, WORK_DETAIL_TITLE } from "../constants/title.contant";
 import { renderWithUserDataAndFlash } from "../helpers/render.helper";
 import IUser from "../interfaces/user.interface";
 import IClass from "../interfaces/class.interface";
@@ -341,6 +341,48 @@ export const deleteClass = async (req: Request, res: Response): Promise<any> => 
             req.flash('error', 'Class does not exist.');
         }
         return res.redirect(`/`);
+    } catch (error: any) {
+        console.log(error);
+    }
+}
+
+export const works = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { id } = req.params;
+        if (process.env.NODE_ENV == "development" || req.headers["content-type"] == 'application/json') { // prevent if opened from browser (for production)
+            const { id: userId } = <IUser>req.user;
+            const classData = await Class.findByPk(id, { order: [[Work, 'createdAt', 'DESC']], include: [Work, User] });
+            return res.status(200).json({ classData });
+        }
+        return res.redirect('/');
+    } catch (error: any) {
+        console.log(error);
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+export const work = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { id, workId } = req.params;
+        const { id: userId } = <IUser>req.user;
+        const work = await Work.findByPk(workId);
+        const classData = await Class.findByPk(id, { include: User });
+        // const isStudentOfThisClass = await Student.findOne({ where: { ClassId: Number(classData?.getDataValue('id')), UserId: userId } });
+
+        if (classData) {
+            if (work) {
+                // if (isStudentOfThisClass) {
+                return renderWithUserDataAndFlash({ req, res, title: WORK_DETAIL_TITLE, path: 'works/work', data: { work, classId: id, classData } });
+                // } else {
+                //     req.flash('error', 'You don\'t have any permission to see this work.');
+                // }
+            } else {
+                req.flash('error', 'The work of this class does not exist.');
+            }
+        } else {
+            req.flash('error', 'The class does not exist.');
+        }
+        return res.redirect('/');
     } catch (error: any) {
         console.log(error);
     }

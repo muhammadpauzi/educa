@@ -1,12 +1,13 @@
 import { Router } from 'express';
-import { index, create, store, _class, inviteLink, invite, students, updateClassCode, deleteClass, followedClasses, joinPost, join, update, updatePut, createWork, createWorkPost } from '../controllers/class.controller';
+import { index, create, store, _class, inviteLink, invite, students, updateClassCode, deleteClass, followedClasses, joinPost, join, update, updatePut, createWork, createWorkPost, works, work } from '../controllers/class.controller';
 import { ensureAuth } from '../middlewares/auth.middleware';
 
 const router: Router = Router();
 
 router.get('/', ensureAuth, index);
 router.get('/create', ensureAuth, create);
-router.get('/:id/works', ensureAuth, () => { });
+router.get('/:id/works', ensureAuth, works);
+router.get('/:id/works/:workId', ensureAuth, work);
 router.get('/:id/works/create', ensureAuth, createWork);
 router.post('/:id/works/create', ensureAuth, createWorkPost);
 router.post('/create', ensureAuth, store);

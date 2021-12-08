@@ -3,7 +3,7 @@
     <div class="grid grid-cols-3 mb-3">
         <button
             class="outline-none appearance-none border-green-500 py-3 px-2 bg-white border-b-2 font-bold text-gray-800 tab-triggers"
-            data-target="#tabItemWorks">Works</button>
+            data-target="#tabItemWorks" onclick="showWorks({{classData.dataValues.id}})">Works</button>
         <button
             class="outline-none appearance-none hover:border-green-200 py-3 px-2 bg-white border-b-2 border-gray-200 font-bold text-gray-800 tab-triggers"
             data-target="#tabItemStudents" onclick="showStudents({{classData.dataValues.id}})">Students</button>
@@ -23,6 +23,9 @@
                         Work</a>
                     {{/if}}
                 </div>
+            </div>
+            <div id="works" class="space-y-2">
+
             </div>
         </div>
         <div class="tab-items" style="display: none;" id="tabItemStudents">

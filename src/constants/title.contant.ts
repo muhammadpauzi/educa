@@ -6,3 +6,4 @@ export const CREATE_CLASS_TITLE = `Create New Class - ${BASE_TITLE}`;
 export const UPDATE_CLASS_TITLE = `Update Class - ${BASE_TITLE}`;
 export const CREATE_WORK_TITLE = `Create New Work - ${BASE_TITLE}`;
 export const PAGE_NOT_FOUND = `Page Not Found - ${BASE_TITLE}`;
+export const WORK_DETAIL_TITLE = `Work Detail - ${BASE_TITLE}`;
